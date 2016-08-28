@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script>
+     var time = new Date().getTime();
+     $(document.body).bind("mousemove keypress", function(e) {
+         time = new Date().getTime();
+     });
+
+     function refresh() {
+         if(new Date().getTime() - time >= 15*60*1000)
+             window.location.reload(true);
+         else
+             setTimeout(refresh, 10000);
+     }
+
+     setTimeout(refresh, 10000);
+		 </script>
+		<!-- <script>
+		// function reload() {
+		// 	document.getElementById("data").src = document.getElementById('systemprofile').src;
+		// };
+		// // Reload the current status every 15 minutes
+		// setInterval(reload, 15*60*1000);
+		// Reload everything every 24 hours (for app updates)
+		setInterval(window.location.reload.bind(window.location), 1000*60*60*24);
+		</script> -->
+	</head>
+	<body>
+
+		<div class="container">
+			<div class="row">
+				<div class="headerImages">
+						<div class="col-lg-4">
+							<img class="img-responsive" src="assets/respclogo.png">
+						</div>
+						<div class="col-lg-4">
+							<img class="img-responsive" src="assets/culogo.png">
+						</div>
+						<div class="col-lg-4">
+							<img class="img-responsive" src="assets/stratalogo.png">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<h2><strong>Current Power </strong></h2>
+					<div id="currentPower"></div>
+				</div>
+				<div class="col-lg-4">
+					<h2><strong> Energy </strong> </h2>
+					<div  id="energy"></div>
+				</div>
+				<div class="col-lg-4">
+					<h2> <strong>CO2 Avoided </strong></h2>
+					<div id="co2Avoided"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-lg-offset-3">
+					<h2>Carolina Union Solar Energy Dashboard</h2>
+					<p> In fall 2015, the Renweable Energy Special Projects Comittee installed solar panels on the roof of the union to promote renewable energy across campus. The solar
+				 	panels have produced over 20 Mega-Watt hours of energy and have reduced the amount of carbon dioxide released into the atmosphere by 14 tons.</p>
+				</div>
+			</div>
+		</div>
+
+		<div id="data">
+			<script type="text/javascript">
+				var request = new XMLHttpRequest();
+				request.open('GET', 'data.json');
+				request.send();
+
+				request.onreadystatechange = function loadData() {
+					if((request.readyState===4) && (request.status===200)) {
+						var data = JSON.parse(request.responseText);
+						
+						document.getElementById('currentPower').innerHTML = '<h1>' + data['currentPower'] + ' kW'+'</h1>';
+						document.getElementById('energy').innerHTML = '<h1>' + data['energy'] + ' MWh'+'</h1>';
+						document.getElementById('co2Avoided').innerHTML = '<h1>' + data['co2Avoided'] + ' Tons'+ '</h1>';
+					}
+				}
+				// alert(request.status);
+				//setInterval(loadData(), 15*69*1000);
+				</script>
+			</div>
+
+	</body>
+</html>
